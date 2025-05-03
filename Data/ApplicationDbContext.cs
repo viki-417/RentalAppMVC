@@ -9,5 +9,10 @@ namespace RentalAppMVC.Data
             : base(options)
         {
         }
+
+        public DbSet<Apartment> Apartments { get; set; }
+        public DbSet<Houses> Houses { get; set; }
+        public DbSet<Studio> Studios { get; set; }
+
     }
 }
