@@ -1,30 +1,18 @@
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RentalAppMVC.Data;
-using RentalAppMVC.Repositories.Abstractions;
-using RentalAppMVC.Repositories;
-using RentalAppMVC.Services.Abstractions;
-using RentalAppMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-    options.UseLazyLoadingProxies();
-});
+    options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
      .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddTransient(typeof(ICrudRepository<>), typeof(CrudRepository<>));
-builder.Services.AddTransient<IApartmentService, ApartmentService>();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
