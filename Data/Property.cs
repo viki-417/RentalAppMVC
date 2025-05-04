@@ -1,6 +1,6 @@
 ﻿namespace RentalAppMVC.Data
 {
-    public abstract class Property
+    public abstract class Property : BaseEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }
