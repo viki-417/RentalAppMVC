@@ -2,31 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentalAppMVC.Data;
-using RentalAppMVC.DTOs;
-using RentalAppMVC.Services.Abstractions;
 
 namespace RentalAppMVC.Controllers
 {
     public class ApartmentsController : Controller
     {
-        private IApartmentService _apartmentService;
-        private UserManager<User> _userManager;
-        public ApartmentsController(IApartmentService apartmentService, UserManager<User> userManager)
+        private readonly ApplicationDbContext _context;
+
+        public ApartmentsController(ApplicationDbContext context)
         {
-            _apartmentService = apartmentService;
-            _userManager = userManager;
+            _context = context;
         }
 
         // GET: Apartments
         public async Task<IActionResult> Index()
         {
-            var items = await _apartmentService.GetAllAsync();
-            return View(items);
+            var applicationDbContext = _context.Apartments.Include(a => a.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Apartments/Details/5
@@ -37,7 +33,9 @@ namespace RentalAppMVC.Controllers
                 return NotFound();
             }
 
-            var apartment = await _apartmentService.GetByIdAsync(id.Value);
+            var apartment = await _context.Apartments
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (apartment == null)
             {
                 return NotFound();
@@ -49,7 +47,7 @@ namespace RentalAppMVC.Controllers
         // GET: Apartments/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName");
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id");
             return View();
         }
 
@@ -58,15 +56,16 @@ namespace RentalAppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ApartmentDTO model)
+        public async Task<IActionResult> Create([Bind("Type,FloorNumber,HasElevator,Id,Title,Description,Price,Address,ImageUrl,UserId")] Apartment apartment)
         {
             if (ModelState.IsValid)
             {
-                await _apartmentService.AddAsync(model);
+                _context.Add(apartment);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);
-            return View(model);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", apartment.UserId);
+            return View(apartment);
         }
 
         // GET: Apartments/Edit/5
@@ -77,12 +76,12 @@ namespace RentalAppMVC.Controllers
                 return NotFound();
             }
 
-            var apartment = await _apartmentService.GetByIdAsync(id.Value);
+            var apartment = await _context.Apartments.FindAsync(id);
             if (apartment == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", apartment.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", apartment.UserId);
             return View(apartment);
         }
 
@@ -91,9 +90,9 @@ namespace RentalAppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ApartmentDTO model)
+        public async Task<IActionResult> Edit(int id, [Bind("Type,FloorNumber,HasElevator,Id,Title,Description,Price,Address,ImageUrl,UserId")] Apartment apartment)
         {
-            if (id != model.Id)
+            if (id != apartment.Id)
             {
                 return NotFound();
             }
@@ -102,11 +101,12 @@ namespace RentalAppMVC.Controllers
             {
                 try
                 {
-                    await _apartmentService.UpdateAsync(model);
+                    _context.Update(apartment);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await ApartmentExistsAsync(model.Id))
+                    if (!ApartmentExists(apartment.Id))
                     {
                         return NotFound();
                     }
@@ -117,8 +117,8 @@ namespace RentalAppMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);
-            return View(model);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Id", apartment.UserId);
+            return View(apartment);
         }
 
         // GET: Apartments/Delete/5
@@ -129,7 +129,9 @@ namespace RentalAppMVC.Controllers
                 return NotFound();
             }
 
-            var apartment = await _apartmentService.GetByIdAsync(id.Value);
+            var apartment = await _context.Apartments
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (apartment == null)
             {
                 return NotFound();
@@ -143,14 +145,19 @@ namespace RentalAppMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var apartment = await _context.Apartments.FindAsync(id);
+            if (apartment != null)
+            {
+                _context.Apartments.Remove(apartment);
+            }
 
-            await _apartmentService.DeleteByIdAsync(id);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> ApartmentExistsAsync(int id)
+        private bool ApartmentExists(int id)
         {
-            return (await _apartmentService.GetByIdAsync(id)).Id == id;
+            return _context.Apartments.Any(e => e.Id == id);
         }
     }
 }
