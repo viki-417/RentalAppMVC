@@ -148,6 +148,20 @@ namespace RentalAppMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Rent(int id)
+        {
+            var apartment = await _apartmentService.GetByIdAsync(id);
+            if (apartment == null || !apartment.IsAvailable)
+            {
+                return NotFound();
+            }
+
+            await _apartmentService.RentAsync(id);
+            return RedirectToAction("Index", "Home");
+        }
+
         private async Task<bool> ApartmentExistsAsync(int id)
         {
             return (await _apartmentService.GetByIdAsync(id)).Id == id;
