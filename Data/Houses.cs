@@ -2,6 +2,11 @@
 {
     public class Houses : Property
     {
+        public Houses(string title, string description, string address, string type, string imageUrl, string userId)
+            : base(title, description, address, type, imageUrl, userId)
+        {
+        }
+
         public override string Type => "House";
 
         public int NumberOfRooms { get; set; }

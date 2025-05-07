@@ -2,6 +2,10 @@
 {
     public class Apartment : Property
     {
+        public Apartment(string title, string description, string address, string type, string imageUrl, string userId) 
+            : base(title, description, address, type, imageUrl, userId)
+        {
+        }
 
         public int FloorNumber { get; set; }
         public bool HasElevator { get; set; }

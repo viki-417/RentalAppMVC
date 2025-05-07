@@ -2,7 +2,7 @@
 {
     public abstract class Property : BaseEntity
     {
-        public int Id { get; set; }
+       
         public string Title { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
@@ -11,6 +11,18 @@
         public string ImageUrl { get; set; }
         public string UserId { get; set; }
         public virtual User? User { get; set; }
+        public bool IsAvailable { get; set; } = true;
+
+        public Property( string title, string description, string address, string type, string imageUrl, string userId)
+        {
+           
+            Title = title;
+            Description = description;
+            Address = address;
+            Type = type;
+            ImageUrl = imageUrl;
+            UserId = userId;
+        }
 
         public virtual string GetPropertyDetails()
         {
