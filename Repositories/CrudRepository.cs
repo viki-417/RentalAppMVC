@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using RentalAppMVC.Data;
 using RentalAppMVC.Repositories.Abstractions;
 using System.Linq.Expressions;
@@ -43,7 +44,7 @@ namespace RentalAppMVC.Repositories
                 .ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }

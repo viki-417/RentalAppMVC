@@ -10,7 +10,7 @@ namespace RentalAppMVC.Repositories.Abstractions
         public Task UpdateAsync(T entity);
         public Task DeleteByIdAsync(int id);
         public Task<IEnumerable<T>> GetAllAsync();
-        public Task<T> GetByIdAsync(int id);
+        public Task<T?> GetByIdAsync(int id);
         public Task<IEnumerable<T>> GetByFilterAsync(Expression<Func<T, bool>> predicate);
     }
 }
