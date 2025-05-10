@@ -1,0 +1,45 @@
+﻿@model IEnumerable<RentalAppMVC.DTOs.HouseDTO>
+
+@{
+    ViewData["Title"] = "Houses List";
+}
+
+<h1>Houses List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New House</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Address)</th>
+            <th>@Html.DisplayNameFor(model => model.Price)</th>
+            <th>@Html.DisplayNameFor(model => model.NumberOfRooms)</th>
+            <th>@Html.DisplayNameFor(model => model.HasGarage)</th>
+            <th>@Html.DisplayNameFor(model => model.HasBalcony)</th>
+            <th>@Html.DisplayNameFor(model => model.Floors)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var house in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => house.Title)</td>
+                <td>@Html.DisplayFor(modelItem => house.Address)</td>
+                <td>@Html.DisplayFor(modelItem => house.Price)</td>
+                <td>@Html.DisplayFor(modelItem => house.NumberOfRooms)</td>
+                <td>@Html.DisplayFor(modelItem => house.HasGarage)</td>
+                <td>@Html.DisplayFor(modelItem => house.HasBalcony)</td>
+                <td>@Html.DisplayFor(modelItem => house.Floors)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@house.Id" class="btn btn-info">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@house.Id" class="btn btn-warning">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@house.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

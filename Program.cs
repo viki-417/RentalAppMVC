@@ -18,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddTransient(typeof(ICrudRepository<>), typeof(CrudRepository<>));
 builder.Services.AddTransient<IApartmentService, ApartmentService>();
+builder.Services.AddTransient<IHouseService, HouseService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

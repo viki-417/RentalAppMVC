@@ -1,0 +1,67 @@
+﻿@model RentalAppMVC.DTOs.HouseDTO
+
+@{
+    ViewData["Title"] = "House Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>House</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfRooms)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfRooms)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HasGarage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HasGarage ? "Yes" : "No")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HasBalcony)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HasBalcony ? "Yes" : "No")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Floors)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Floors)
+        </dd>
+    </dl>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> |
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
