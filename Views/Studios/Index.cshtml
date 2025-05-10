@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<RentalAppMVC.DTOs.StudioDTO>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Studios List";
 }
 
-<h1>Index</h1>
+<h1>Studios List</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Studio</a>
 </p>
 <table class="table">
     <thead>
@@ -39,24 +39,24 @@
             <th>
                 @Html.DisplayNameFor(model => model.Pets)
             </th>
-            <td>
+            <th>
                 @Html.DisplayNameFor(model => model.Furnitured)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.AC)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Balcony)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Garage)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Tv)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Wifi)
-            </td>
+            </th>
             <th>Actions</th>         
         </tr>
     </thead>
@@ -97,8 +97,6 @@
                 <td>@Html.DisplayFor(modelItem => item.Garage)</td>
                 <td>@Html.DisplayFor(modelItem => item.Tv)</td>
                 <td>@Html.DisplayFor(modelItem => item.Wifi)</td>
-                <td>
-
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a> |
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
