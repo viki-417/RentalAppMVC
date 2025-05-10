@@ -16,14 +16,25 @@ namespace RentalAppMVC.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string type, int? maxPrice)
         {
-            var availableProperties = _context.Properties
-             .Where(p => p.IsAvailable) // Only show available ones
-             .ToList();
+            var properties = _context.Properties
+                .Where(p => p.IsAvailable)
+                .AsQueryable();
 
-            return View(availableProperties);
+            if (!string.IsNullOrEmpty(type))
+            {
+                properties = properties.Where(p => p.Type == type);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                properties = properties.Where(p => p.Price <= maxPrice.Value);
+            }
+
+            return View(properties.ToList());
         }
+
 
         public IActionResult Privacy()
         {
