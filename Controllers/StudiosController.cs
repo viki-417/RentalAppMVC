@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,141 +6,139 @@ using RentalAppMVC.Data;
 using RentalAppMVC.DTOs;
 using RentalAppMVC.Services.Abstractions;
 
+
 namespace RentalAppMVC.Controllers
 {
-    public class ApartmentsController : Controller
+    public class StudiosController : Controller
     {
-        private IApartmentService _apartmentService;
+        private IStudioService _studioService;
         private UserManager<User> _userManager;
-        public ApartmentsController(IApartmentService apartmentService, UserManager<User> userManager)
+
+        public StudiosController(IStudioService studioService, UserManager<User> userManager)
         {
-            _apartmentService = apartmentService;
+            _studioService = studioService;
             _userManager = userManager;
         }
 
-        // GET: Apartments
+        // Get studios
         public async Task<IActionResult> Index()
-        {
-            var items = await _apartmentService.GetAllAsync();
+        { 
+        var items = await _studioService.GetAllAsync();
             return View(items);
         }
 
-        // GET: Apartments/Details/5
+        // GET: Studios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var apartment = await _apartmentService.GetByIdAsync(id.Value);
-            if (apartment == null)
+            var studio = await _studioService.GetByIdAsync(id.Value);
+            if (studio == null)
             {
                 return NotFound();
             }
-
-            return View(apartment);
+            return View(studio);
         }
+        // GET: Studios/Create
 
-        // GET: Apartments/Create
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName");
             return View();
         }
 
-        // POST: Apartments/Create
+        // POST: Studios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ApartmentDTO model)
+        public async Task<IActionResult> Create(StudioDTO model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _apartmentService.AddAsync(model);
+                await _studioService.CreateAsync(model);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);
             return View(model);
-        }
 
-        // GET: Apartments/Edit/5
+        }
+        //Get Studios/Edit/
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var apartment = await _apartmentService.GetByIdAsync(id.Value);
-            if (apartment == null)
+            var studio = await _studioService.GetByIdAsync(id.Value);
+            if (studio == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", apartment.UserId);
-            return View(apartment);
+            ViewData["UserId"] = new SelectList(_userManager.Users, "Id","UserName",studio.UserId);
+            return View(studio);
         }
 
-        // POST: Apartments/Edit/5
+        //Post studio
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ApartmentDTO model)
+        public async Task<IActionResult> Edit(int id, StudioDTO model)
         {
             if (id != model.Id)
             {
                 return NotFound();
-            }
 
+            }
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _apartmentService.UpdateAsync(model);
+                    await _studioService.UpdateAsync(model);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await ApartmentExistsAsync(model.Id))
+                    if (!await StudioExistsAsync(model.Id))
                     {
                         return NotFound();
                     }
                     else
-                    {
-                        throw;
+                    { 
+                    throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);
+            ViewData["UserId"] =  new SelectList(_userManager.Users,"Id","UserName",model.UserId);
             return View(model);
-        }
 
-        // GET: Apartments/Delete/5
+        }
+        //Get Studio/delete
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var apartment = await _apartmentService.GetByIdAsync(id.Value);
-            if (apartment == null)
+            var studio = await _studioService.GetByIdAsync(id.Value);
+            if (studio == null)
             {
                 return NotFound();
             }
-
-            return View(apartment);
+            return View(studio);
         }
 
-        // POST: Apartments/Delete/5
+        //Post studio/ delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
 
-            await _apartmentService.DeleteByIdAsync(id);
+            await _studioService.DeleteByIdAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -152,19 +146,18 @@ namespace RentalAppMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Rent(int id)
         {
-            var apartment = await _apartmentService.GetByIdAsync(id);
-            if (apartment == null || !apartment.IsAvailable)
+            var studio = await _studioService.GetByIdAsync(id);
+            if (studio == null || !studio.IsAvailable)
             {
                 return NotFound();
             }
 
-            await _apartmentService.RentAsync(id);
+            await _studioService.RentAsync(id);
             return RedirectToAction("Index", "Home");
         }
-
-        private async Task<bool> ApartmentExistsAsync(int id)
+        private async Task<bool> StudioExistsAsync(int id)
         {
-            return (await _apartmentService.GetByIdAsync(id)).Id == id;
+            return (await _studioService.GetByIdAsync(id)).Id == id;
         }
     }
 }

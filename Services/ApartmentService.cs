@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RentalAppMVC.Data;
 using RentalAppMVC.DTOs;
 using RentalAppMVC.Repositories.Abstractions;
@@ -10,10 +11,13 @@ namespace RentalAppMVC.Services
     {
         private readonly ICrudRepository<Apartment> _apartmentRepository;
         private readonly IMapper _mapper;
-        public ApartmentService(ICrudRepository<Apartment> apartmentRepository, IMapper mapper)
+        private readonly ApplicationDbContext _context;
+
+        public ApartmentService(ICrudRepository<Apartment> apartmentRepository, IMapper mapper, ApplicationDbContext context)
         {
             _apartmentRepository = apartmentRepository;
             _mapper = mapper;
+            _context = context;
         }
         public async Task AddAsync(ApartmentDTO model)
         {
@@ -43,6 +47,15 @@ namespace RentalAppMVC.Services
             var apartments = (await _apartmentRepository.GetByFilterAsync(item => item.Address.Contains(address)));
             return _mapper.Map<List<ApartmentDTO>>(apartments);
 
+        }
+        public async Task RentAsync(int id)
+        {
+            var apartment = await _context.Apartments.FirstOrDefaultAsync(a => a.Id == id);
+            if (apartment != null && apartment.IsAvailable)
+            {
+                apartment.IsAvailable = false;
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task UpdateAsync(ApartmentDTO model)

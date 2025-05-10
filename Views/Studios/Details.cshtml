@@ -1,4 +1,4 @@
-﻿@model RentalAppMVC.DTOs.ApartmentDTO
+﻿@model RentalAppMVC.DTOs.StudioDTO
 
 @{
     ViewData["Title"] = "Details";
@@ -34,12 +34,12 @@
         <hr />
 
         @* 6. FLOOR NUMBER *@
-        <p class="card-text"><strong>Floor Number:</strong> @Model.FloorNumber</p>
+        <p class="card-text"><strong>Floor Number:</strong> @Model.Description</p>
 
         @* 7. HAS ELEVATOR *@
         <p class="card-text">
             <strong>Elevator:</strong>
-            @(Model.HasElevator ? "Yes" : "No")
+            @(Model.FloorNumber)
         </p>
 
         @* 6. RENT BUTTON *@

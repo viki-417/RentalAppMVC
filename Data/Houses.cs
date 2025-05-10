@@ -2,6 +2,7 @@
 {
     public class Houses : Property
     {
+
         public override string Type => "House";
 
         public int NumberOfRooms { get; set; }

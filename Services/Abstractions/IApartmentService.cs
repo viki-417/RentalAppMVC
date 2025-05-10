@@ -10,5 +10,6 @@ namespace RentalAppMVC.Services.Abstractions
         Task AddAsync(ApartmentDTO model);
         Task UpdateAsync(ApartmentDTO model);
         Task DeleteByIdAsync(int id);
+        Task RentAsync(int id);
     }
 }
