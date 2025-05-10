@@ -20,6 +20,7 @@ builder.Services.AddTransient(typeof(ICrudRepository<>), typeof(CrudRepository<>
 builder.Services.AddTransient<IApartmentService, ApartmentService>();
 builder.Services.AddTransient<IHouseService, HouseService>();
 builder.Services.AddTransient<IStudioService, StudioService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

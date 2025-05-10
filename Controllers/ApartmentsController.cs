@@ -52,6 +52,25 @@ namespace RentalAppMVC.Controllers
             ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName");
             return View();
         }
+        public async Task<IActionResult> Landlord(string propertyId)
+        {
+            var property = await _apartmentService.GetByIdAsync(propertyId);
+            if (property == null) return NotFound();
+
+            var user = await _userManager.FindByIdAsync(property.UserId); // ✅ await here
+            if (user == null) return NotFound();
+
+            var userDto = new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+                ContactNumber = user.ContactNumber,
+                Address = user.Address
+            };
+
+            return View(userDto);
+        }
 
         // POST: Apartments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
