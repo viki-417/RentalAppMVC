@@ -22,6 +22,28 @@
                 @Html.DisplayNameFor(model => model.HasElevator)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Pets)
+            </th>
+            <td>
+                @Html.DisplayNameFor(model => model.Furnitured)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.AC)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Balcony)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Garage)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Tv)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Wifi)
+            </td>
+
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
@@ -70,6 +92,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ImageUrl)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pets)
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Furnitured)</td>
+                <td>@Html.DisplayFor(modelItem => item.AC)</td>
+                <td>@Html.DisplayFor(modelItem => item.Balcony)</td>
+                <td>@Html.DisplayFor(modelItem => item.Garage)</td>
+                <td>@Html.DisplayFor(modelItem => item.Tv)</td>
+                <td>@Html.DisplayFor(modelItem => item.Wifi)</td>
+                <td>
                 <td>
                     @(item.User != null ? item.User.Id : "No user")
                 </td>

@@ -39,6 +39,22 @@
             <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pets)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Furnitured)
+            </th> <th>
+                @Html.DisplayNameFor(model => model.AC)
+            </th> <th>
+                @Html.DisplayNameFor(model => model.Balcony)
+            </th> <th>
+                @Html.DisplayNameFor(model => model.Garage)
+            </th> <th>
+                @Html.DisplayNameFor(model => model.Tv)
+            </th> <th>
+                @Html.DisplayNameFor(model => model.Wifi)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -70,6 +86,25 @@
                 @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Pets)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Furnitured)
+                </td><td>
+                    @Html.DisplayFor(modelItem => item.AC)
+                </td><td>
+                    @Html.DisplayFor(modelItem => item.Balcony)
+                </td><td>
+                    @Html.DisplayFor(modelItem => item.Garage)
+                </td><td>
+                    @Html.DisplayFor(modelItem => item.Tv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wifi)
+                </td>
+
+                <td>
+
                     @(item.User != null ? item.User.Id : "No user")
                 </td>
             <td>
