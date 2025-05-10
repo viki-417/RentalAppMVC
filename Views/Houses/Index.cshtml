@@ -57,14 +57,15 @@
                 <td>@Html.DisplayFor(modelItem => house.HasBalcony)</td>
                 <td>@Html.DisplayFor(modelItem => house.Floors)</td>
                 <td>@Html.DisplayFor(modelItem => house.Furnitured)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => house.Pets)
+                </td>
                 <td>@Html.DisplayFor(modelItem => house.AC)</td>
                 <td>@Html.DisplayFor(modelItem => house.Balcony)</td>
                 <td>@Html.DisplayFor(modelItem => house.Garage)</td>
                 <td>@Html.DisplayFor(modelItem => house.Tv)</td>
                 <td>@Html.DisplayFor(modelItem => house.Wifi)</td>
-                <td>
-                    @Html.DisplayFor(modelItem => house.Pets)
-                </td>
+               
                 <td>
                     <a asp-action="Details" asp-route-id="@house.Id" class="btn btn-info">Details</a> |
                     <a asp-action="Edit" asp-route-id="@house.Id" class="btn btn-warning">Edit</a> |

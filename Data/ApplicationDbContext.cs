@@ -11,7 +11,7 @@ namespace RentalAppMVC.Data
         }
         public DbSet<Property> Properties { get; set; }
         public DbSet<Apartment> Apartments { get; set; }
-        public DbSet<Houses> Houses { get; set; }
+        public DbSet<House> Houses { get; set; }
         public DbSet<Studio> Studios { get; set; }
 
     }

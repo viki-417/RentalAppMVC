@@ -11,7 +11,5 @@ namespace RentalAppMVC.Services.Abstractions
         Task UpdateAsync(StudioDTO model);
         Task DeleteByIdAsync(int id);
         Task RentAsync(int id);
-
-        Task CreateAsync(StudioDTO model);
     }
 }

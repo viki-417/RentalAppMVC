@@ -8,10 +8,10 @@ namespace RentalAppMVC.Services
 {
     public class HouseService : IHouseService
     {
-        private readonly ICrudRepository<Houses> _houseRepository;
+        private readonly ICrudRepository<House> _houseRepository;
         private readonly IMapper _mapper;
 
-        public HouseService(ICrudRepository<Houses> houseRepository, IMapper mapper)
+        public HouseService(ICrudRepository<House> houseRepository, IMapper mapper)
         {
             _houseRepository = houseRepository;
             _mapper = mapper;
@@ -19,7 +19,7 @@ namespace RentalAppMVC.Services
 
         public async Task AddAsync(HouseDTO model)
         {
-            var house = _mapper.Map<Houses>(model);
+            var house = _mapper.Map<House>(model);
             await _houseRepository.AddAsync(house);
         }
 
@@ -48,7 +48,7 @@ namespace RentalAppMVC.Services
 
         public async Task UpdateAsync(HouseDTO model)
         {
-            var house = _mapper.Map<Houses>(model);
+            var house = _mapper.Map<House>(model);
             await _houseRepository.UpdateAsync(house);
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace RentalAppMVC.Data
 {
-    public class Houses : Property
+    public class House : Property
     {
 
         public override string Type => "House";
