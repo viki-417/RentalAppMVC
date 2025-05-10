@@ -4,85 +4,68 @@
     ViewData["Title"] = "House Details";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="card mb-4" style="max-width: 600px; margin: auto;">
+    @* 1. IMAGE *@
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" />
+    }
 
-<div>
-    <h4>House</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfRooms)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfRooms)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HasGarage)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HasGarage ? "Yes" : "No")
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HasBalcony)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HasBalcony ? "Yes" : "No")
-        </dd>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Pets
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Furnitured
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.AC
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Balcony
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Garage
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Tv
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Wifi
-        </p>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Floors)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Floors)
-        </dd>
-    </dl>
+    <div class="card-body">
+        @* 2. TITLE *@
+        <h3 class="card-title">@Model.Title</h3>
 
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> |
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        @* 3. ADDRESS *@
+        <p class="card-text"><strong>Address:</strong> @Model.Address</p>
+
+        @* 4. PRICE *@
+        <p class="card-text"><strong>Price:</strong> $@Model.Price / month</p>
+
+        <hr />
+
+        @* 5. DESCRIPTION *@
+        <p class="card-text"><strong>Description:</strong><br />@Model.Description</p>
+
+        <hr />
+
+        @* 6. NUMBER OF ROOMS *@
+        <p class="card-text"><strong>Number of Rooms:</strong> @Model.NumberOfRooms</p>
+
+        @* 7. HAS GARAGE *@
+        <p class="card-text">
+            <strong>Garage:</strong>
+            @(Model.HasGarage ? "Yes" : "No")
+        </p>
+
+        @* 8. HAS BALCONY *@
+        <p class="card-text">
+            <strong>Balcony:</strong>
+            @(Model.HasBalcony ? "Yes" : "No")
+        </p>
+
+        @* 9. FLOORS *@
+        <p class="card-text"><strong>Floors:</strong> @Model.Floors</p>
+
+        <hr />
+
+        @* 10. RENT BUTTON *@
+        <form asp-controller="Houses"
+              asp-action="Rent"
+              asp-route-id="@Model.Id"
+              method="post"
+              class="d-inline">
+            <button type="submit"
+                    class="btn btn-primary"
+            @(Model.IsAvailable ? "" : "disabled")>
+                @(Model.IsAvailable ? "Rent" : "Already Rented")
+            </button>
+        </form>
+
+        @* 11. BACK LINK *@
+        <a asp-controller="Houses"
+           asp-action="Index"
+           class="btn btn-link">
+            Back to List
+        </a>
     </div>
 </div>
