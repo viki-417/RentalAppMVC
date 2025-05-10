@@ -48,17 +48,19 @@
                                     Details
                                 </a>
 
-                                <form asp-action="Rent"
-                                      asp-controller="@(item.Type == "House" ? "Houses" : item.Type == "Studio" ? "Studios" : "Apartments")"
-                                      asp-route-id="@item.Id"
-                                      method="post"
-                                      class="d-inline">
-                                    <button type="submit"
-                                            class="btn btn-primary btn-sm"
-                                    @(item.IsAvailable ? "" : "disabled")>
-                                        @(item.IsAvailable ? "Rent" : "Rented")
-                                    </button>
-                                </form>
+                                @{
+                                    var controllerName = item.Type == "House" ? "Houses"
+                                    : item.Type == "Studio" ? "Studios"
+                                    : "Apartments";
+                                    var isAvailable = item.IsAvailable;
+                                }
+
+                                <a asp-action="Landlord"
+                                   asp-controller="@controllerName"
+                                   asp-route-propertyId="@item.Id"
+                                   class="btn btn-primary btn-sm @(isAvailable ? "" : "disabled")">
+                                    @(isAvailable ? "Contact Information" : "Rented")
+                                </a>
                             </div>
                         </div>
                     </div>
