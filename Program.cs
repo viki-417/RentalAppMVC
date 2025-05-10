@@ -5,6 +5,7 @@ using RentalAppMVC.Repositories.Abstractions;
 using RentalAppMVC.Repositories;
 using RentalAppMVC.Services.Abstractions;
 using RentalAppMVC.Services;
+using RentalAppMVC.Data.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,11 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    DataSeeder.Initialize(services).Wait();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
