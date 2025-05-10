@@ -56,9 +56,9 @@ namespace RentalAppMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(StudioDTO model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                await _studioService.CreateAsync(model);
+                await _studioService.AddAsync(model);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);

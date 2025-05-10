@@ -25,11 +25,6 @@ namespace RentalAppMVC.Services
             await _studioRepository.AddAsync(studio);
         }
 
-        public Task CreateAsync(StudioDTO model)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task DeleteByIdAsync(int id)
         {
             await _studioRepository.DeleteByIdAsync(id);
