@@ -13,20 +13,11 @@
         public virtual User? User { get; set; }
         public bool IsAvailable { get; set; } = true;
 
-        public Property( string title, string description, string address, string type, string imageUrl, string userId)
-        {
-           
-            Title = title;
-            Description = description;
-            Address = address;
-            Type = type;
-            ImageUrl = imageUrl;
-            UserId = userId;
-        }
+        public bool Pets { get; set; } = true;
 
         public virtual string GetPropertyDetails()
         {
-            return $" Image: {ImageUrl}\n{Title} ({Type})\n{Description}\nPrice: {Price:C}\nAddress: {Address}";
+            return $" Image: {ImageUrl}\n{Title} ({Type})\n{Description}\nPrice: {Price:C}\nAddress: {Address}\nPets: {Pets}";
         }
     }
 }
