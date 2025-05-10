@@ -20,6 +20,28 @@
             <th>@Html.DisplayNameFor(model => model.HasGarage)</th>
             <th>@Html.DisplayNameFor(model => model.HasBalcony)</th>
             <th>@Html.DisplayNameFor(model => model.Floors)</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pets)
+            </th>
+            <td>
+                @Html.DisplayNameFor(model => model.Furnitured)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.AC)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Balcony)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Garage)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Tv)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Wifi)
+            </td>
+
             <th>Actions</th>
         </tr>
     </thead>
@@ -34,6 +56,15 @@
                 <td>@Html.DisplayFor(modelItem => house.HasGarage)</td>
                 <td>@Html.DisplayFor(modelItem => house.HasBalcony)</td>
                 <td>@Html.DisplayFor(modelItem => house.Floors)</td>
+                <td>@Html.DisplayFor(modelItem => house.Furnitured)</td>
+                <td>@Html.DisplayFor(modelItem => house.AC)</td>
+                <td>@Html.DisplayFor(modelItem => house.Balcony)</td>
+                <td>@Html.DisplayFor(modelItem => house.Garage)</td>
+                <td>@Html.DisplayFor(modelItem => house.Tv)</td>
+                <td>@Html.DisplayFor(modelItem => house.Wifi)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => house.Pets)
+                </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@house.Id" class="btn btn-info">Details</a> |
                     <a asp-action="Edit" asp-route-id="@house.Id" class="btn btn-warning">Edit</a> |
