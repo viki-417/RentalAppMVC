@@ -8,13 +8,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentalAppMVC.Data;
 using RentalAppMVC.DTOs;
+using RentalAppMVC.Services;
 using RentalAppMVC.Services.Abstractions;
+using RentalAppMVC.ViewModels;
 
 namespace RentalAppMVC.Controllers
 {
     public class ApartmentsController : Controller
     {
-        private IApartmentService _apartmentService;
+        private readonly IApartmentService _apartmentService;
         private UserManager<User> _userManager;
         public ApartmentsController(IApartmentService apartmentService, UserManager<User> userManager)
         {
@@ -54,10 +56,16 @@ namespace RentalAppMVC.Controllers
         }
         public async Task<IActionResult> Landlord(string propertyId)
         {
-            var property = await _apartmentService.GetByIdAsync(propertyId);
+            if (!int.TryParse(propertyId, out var id))
+            {
+                return BadRequest("Invalid property ID.");
+            }
+
+            
+            var property = await _apartmentService.GetByIdAsync(id);
             if (property == null) return NotFound();
 
-            var user = await _userManager.FindByIdAsync(property.UserId); // ✅ await here
+            var user = await _userManager.FindByIdAsync(property.UserId);
             if (user == null) return NotFound();
 
             var userDto = new UserDTO
@@ -68,8 +76,13 @@ namespace RentalAppMVC.Controllers
                 ContactNumber = user.ContactNumber,
                 Address = user.Address
             };
+            var viewModel = new LandlordViewModel
+            {
+                Landlord = userDto,
+                PropertyId = propertyId
+            };
 
-            return View(userDto);
+            return View(viewModel);
         }
 
         // POST: Apartments/Create
@@ -81,13 +94,16 @@ namespace RentalAppMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                // ✅ Assign the currently logged-in user ID
+                model.UserId = _userManager.GetUserId(User);
+
                 await _apartmentService.AddAsync(model);
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);
             return View(model);
         }
-
         // GET: Apartments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -166,21 +182,24 @@ namespace RentalAppMVC.Controllers
             await _apartmentService.DeleteByIdAsync(id);
             return RedirectToAction(nameof(Index));
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Rent(int id)
+        public async Task<IActionResult> Rent(string id)
         {
-            var apartment = await _apartmentService.GetByIdAsync(id);
-            if (apartment == null || !apartment.IsAvailable)
+            if (!int.TryParse(id, out var studioId))
+            {
+                return BadRequest("Invalid property ID.");
+            }
+
+            var studio = await _apartmentService.GetByIdAsync(studioId);
+            if (studio == null || !studio.IsAvailable)
             {
                 return NotFound();
             }
 
-            await _apartmentService.RentAsync(id);
+            await _apartmentService.RentAsync(studioId);
             return RedirectToAction("Index", "Home");
         }
-
         private async Task<bool> ApartmentExistsAsync(int id)
         {
             return (await _apartmentService.GetByIdAsync(id)).Id == id;

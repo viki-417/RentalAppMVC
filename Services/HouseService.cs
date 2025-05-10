@@ -46,6 +46,11 @@ namespace RentalAppMVC.Services
             return _mapper.Map<List<HouseDTO>>(houses);
         }
 
+        public Task RentAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateAsync(HouseDTO model)
         {
             var house = _mapper.Map<House>(model);

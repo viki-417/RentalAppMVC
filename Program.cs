@@ -35,7 +35,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    DataSeeder.Initialize(services).Wait();
+    await DataSeeder.Initialize(services); // Use await instead of Wait() to avoid blocking
 }
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

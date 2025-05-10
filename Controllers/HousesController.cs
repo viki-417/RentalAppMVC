@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RentalAppMVC.Data;
 using RentalAppMVC.DTOs;
+using RentalAppMVC.Services;
 using RentalAppMVC.Services.Abstractions;
+using RentalAppMVC.ViewModels;
 
 namespace RentalAppMVC.Controllers
 {
@@ -11,6 +13,7 @@ namespace RentalAppMVC.Controllers
     {
         private readonly IHouseService _houseService;
         private readonly UserManager<User> _userManager;
+     
 
         public HousesController(IHouseService houseService, UserManager<User> userManager)
         {
@@ -57,6 +60,36 @@ namespace RentalAppMVC.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Landlord(string propertyId)
+        {
+            if (!int.TryParse(propertyId, out var id))
+            {
+                return BadRequest("Invalid property ID.");
+            }
+
+            // Use the parsed int
+            var property = await _houseService.GetByIdAsync(id);
+            if (property == null) return NotFound();
+
+            var user = await _userManager.FindByIdAsync(property.UserId);
+            if (user == null) return NotFound();
+
+            var userDto = new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+                ContactNumber = user.ContactNumber,
+                Address = user.Address
+            };
+            var viewModel = new LandlordViewModel
+            {
+                Landlord = userDto,
+                PropertyId = propertyId
+            };
+
+            return View(viewModel);
+        }
         // GET: Houses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -105,5 +138,29 @@ namespace RentalAppMVC.Controllers
             await _houseService.DeleteByIdAsync(id);
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Rent(string id)
+        {
+            if (!int.TryParse(id, out var studioId))
+            {
+                return BadRequest("Invalid property ID.");
+            }
+
+            var studio = await _houseService.GetByIdAsync(studioId);
+            if (studio == null || !studio.IsAvailable)
+            {
+                return NotFound();
+            }
+
+            await _houseService.RentAsync(studioId);
+            return RedirectToAction("Index", "Home");
+        }
+        private async Task<bool> HouseExistsAsync(int id)
+        {
+            return (await _houseService.GetByIdAsync(id)).Id == id;
+        }
     }
 }
+    
+

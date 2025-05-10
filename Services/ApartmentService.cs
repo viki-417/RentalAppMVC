@@ -63,5 +63,10 @@ namespace RentalAppMVC.Services
             var apartment = _mapper.Map<Apartment>(model);
             await _apartmentRepository.UpdateAsync(apartment);
         }
+
+        public Task GetByIdAsync(string propertyId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

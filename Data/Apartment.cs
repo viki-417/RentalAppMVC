@@ -2,7 +2,9 @@
 {
     public class Apartment : Property
     {
-        public override string Type => "Apartment";
+        public Apartment()
+        {
+        }
 
         public int FloorNumber { get; set; }
         public bool HasElevator { get; set; }
