@@ -7,36 +7,36 @@
 
 
 <div class="card mb-4" style="max-width: 600px; margin: auto;">
-    @* 1. IMAGE *@
+
     @if (!string.IsNullOrEmpty(Model.ImageUrl))
     {
         <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" />
     }
 
     <div class="card-body">
-        @* 2. TYPE *@
+
         <h6 class="text-muted">Type: @Model.Type</h6>
 
-        @* 3. TITLE *@
+
         <h3 class="card-title">@Model.Title</h3>
 
-        @* 4. ADDRESS *@
+
         <p class="card-text"><strong>Address:</strong> @Model.Address</p>
 
-        @* 5. PRICE *@
+
         <p class="card-text"><strong>Price:</strong> $@Model.Price / month</p>
 
         <hr />
 
-        @* 8. DESCRIPTION *@
+
         <p class="card-text"><strong>Description:</strong><br />@Model.Description</p>
 
         <hr />
 
-        @* 6. FLOOR NUMBER *@
+
         <p class="card-text"><strong>Floor Number:</strong> @Model.Description</p>
 
-        @* 7. HAS ELEVATOR *@
+
         <p class="card-text">
             <strong>Elevator:</strong>
             @(Model.FloorNumber)
@@ -69,7 +69,7 @@
         <p class="card-text">
             <strong>Wifi:</strong> @(Model.Wifi ? "Yes" : "No")
         </p>
-        @* 6. RENT BUTTON *@
+
         <form asp-controller="Apartments"
               asp-action="Rent"
               asp-route-id="@Model.Id"
@@ -82,7 +82,7 @@
             </button>
         </form>
 
-        @* 7. BACK LINK *@
+
         <a asp-controller="Apartments"
            asp-action="Index"
            class="btn btn-link">

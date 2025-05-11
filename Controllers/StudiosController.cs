@@ -22,14 +22,14 @@ namespace RentalAppMVC.Controllers
             _userManager = userManager;
         }
 
-        // Get studios
+
         public async Task<IActionResult> Index()
         { 
         var items = await _studioService.GetAllAsync();
             return View(items);
         }
 
-        // GET: Studios/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +43,7 @@ namespace RentalAppMVC.Controllers
             }
             return View(studio);
         }
-        // GET: Studios/Create
+
 
         public IActionResult Create()
         {
@@ -51,9 +51,7 @@ namespace RentalAppMVC.Controllers
             return View();
         }
 
-        // POST: Studios/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(StudioDTO model)
@@ -86,7 +84,7 @@ namespace RentalAppMVC.Controllers
                 return BadRequest("Invalid property ID.");
             }
 
-            // Use the parsed int
+
             var property = await _studioService.GetByIdAsync(id);
             if (property == null) return NotFound();
 
@@ -109,7 +107,7 @@ namespace RentalAppMVC.Controllers
 
             return View(viewModel);
         }
-        //Get Studios/Edit/
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -125,9 +123,7 @@ namespace RentalAppMVC.Controllers
             return View(studio);
         }
 
-        //Post studio
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, StudioDTO model)
@@ -160,7 +156,7 @@ namespace RentalAppMVC.Controllers
             return View(model);
 
         }
-        //Get Studio/delete
+
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -176,7 +172,7 @@ namespace RentalAppMVC.Controllers
             return View(studio);
         }
 
-        //Post studio/ delete
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

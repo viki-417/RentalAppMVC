@@ -21,14 +21,14 @@ namespace RentalAppMVC.Controllers
             _userManager = userManager;
         }
 
-        // GET: Houses
+
         public async Task<IActionResult> Index()
         {
             var items = await _houseService.GetAllAsync();
             return View(items);
         }
 
-        // GET: Houses/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -39,14 +39,14 @@ namespace RentalAppMVC.Controllers
             return View(house);
         }
 
-        // GET: Houses/Create
+ 
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName");
             return View();
         }
 
-        // POST: Houses/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HouseDTO model)
@@ -79,7 +79,7 @@ namespace RentalAppMVC.Controllers
                 return BadRequest("Invalid property ID.");
             }
 
-            // Use the parsed int
+
             var property = await _houseService.GetByIdAsync(id);
             if (property == null) return NotFound();
 
@@ -102,7 +102,7 @@ namespace RentalAppMVC.Controllers
 
             return View(viewModel);
         }
-        // GET: Houses/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -114,7 +114,7 @@ namespace RentalAppMVC.Controllers
             return View(house);
         }
 
-        // POST: Houses/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, HouseDTO model)
@@ -131,7 +131,7 @@ namespace RentalAppMVC.Controllers
             return View(model);
         }
 
-        // GET: Houses/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -142,7 +142,7 @@ namespace RentalAppMVC.Controllers
             return View(house);
         }
 
-        // POST: Houses/Delete/5
+ 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

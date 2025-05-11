@@ -24,14 +24,14 @@ namespace RentalAppMVC.Controllers
             _userManager = userManager;
         }
 
-        // GET: Apartments
+
         public async Task<IActionResult> Index()
         {
             var items = await _apartmentService.GetAllAsync();
             return View(items);
         }
 
-        // GET: Apartments/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,7 +48,7 @@ namespace RentalAppMVC.Controllers
             return View(apartment);
         }
 
-        // GET: Apartments/Create
+
         public IActionResult Create()
         
        {
@@ -86,16 +86,14 @@ namespace RentalAppMVC.Controllers
             return View(viewModel);
         }
 
-        // POST: Apartments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ApartmentDTO model)
         {
             if (ModelState.IsValid)
             {
-                // ✅ Assign the currently logged-in user ID
+
                 model.UserId = _userManager.GetUserId(User);
                 if (string.IsNullOrEmpty(model.UserId))
                 {
@@ -111,7 +109,7 @@ namespace RentalAppMVC.Controllers
             ViewData["UserId"] = new SelectList(_userManager.Users.Where(u => u.UserName != null), "Id", "UserName", model.UserId);
             return View(model);
         }
-        // GET: Apartments/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -128,9 +126,7 @@ namespace RentalAppMVC.Controllers
             return View(apartment);
         }
 
-        // POST: Apartments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ApartmentDTO model)
@@ -163,7 +159,7 @@ namespace RentalAppMVC.Controllers
             return View(model);
         }
 
-        // GET: Apartments/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -180,7 +176,7 @@ namespace RentalAppMVC.Controllers
             return View(apartment);
         }
 
-        // POST: Apartments/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

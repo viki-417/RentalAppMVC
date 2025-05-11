@@ -5,50 +5,50 @@
 }
 
 <div class="card mb-4" style="max-width: 600px; margin: auto;">
-    @* 1. IMAGE *@
+
     @if (!string.IsNullOrEmpty(Model.ImageUrl))
     {
         <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" />
     }
 
     <div class="card-body">
-        @* 2. TITLE *@
+
         <h3 class="card-title">@Model.Title</h3>
 
-        @* 3. ADDRESS *@
+
         <p class="card-text"><strong>Address:</strong> @Model.Address</p>
 
-        @* 4. PRICE *@
+
         <p class="card-text"><strong>Price:</strong> $@Model.Price / month</p>
 
         <hr />
 
-        @* 5. DESCRIPTION *@
+
         <p class="card-text"><strong>Description:</strong><br />@Model.Description</p>
 
         <hr />
 
-        @* 6. NUMBER OF ROOMS *@
+
         <p class="card-text"><strong>Number of Rooms:</strong> @Model.NumberOfRooms</p>
 
-        @* 7. HAS GARAGE *@
+
         <p class="card-text">
             <strong>Garage:</strong>
             @(Model.HasGarage ? "Yes" : "No")
         </p>
 
-        @* 8. HAS BALCONY *@
+
         <p class="card-text">
             <strong>Balcony:</strong>
             @(Model.HasBalcony ? "Yes" : "No")
         </p>
 
-        @* 9. FLOORS *@
+
         <p class="card-text"><strong>Floors:</strong> @Model.Floors</p>
 
         <hr />
 
-        @* 10. RENT BUTTON *@
+
         <form asp-controller="Houses"
               asp-action="Rent"
               asp-route-id="@Model.Id"
@@ -61,7 +61,7 @@
             </button>
         </form>
 
-        @* 11. BACK LINK *@
+
         <a asp-controller="Houses"
            asp-action="Index"
            class="btn btn-link">
