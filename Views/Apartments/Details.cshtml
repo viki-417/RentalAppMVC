@@ -42,23 +42,32 @@
             @(Model.HasElevator ? "Yes" : "No")
         </p>
         <p class="card-text">
-            <strong>Pets:</strong> @Model.Pets
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Furnitured
-        </p><p class="card-text">
-            <strong>Pets:</strong> @Model.AC
-        </p><p class="card-text">
-            <strong>Pets:</strong> @Model.Balcony
-        </p><p class="card-text">
-            <strong>Pets:</strong> @Model.Garage
-        </p><p class="card-text">
-            <strong>Pets:</strong> @Model.Tv
-        </p>
-        <p class="card-text">
-            <strong>Pets:</strong> @Model.Wifi
+            <strong>Pets:</strong> @(Model.Pets ? "Yes" : "No")
         </p>
 
+        <p class="card-text">
+            <strong>Furniture:</strong> @(Model.Furnitured ? "Yes" : "No")
+        </p>
+
+        <p class="card-text">
+            <strong>AC:</strong> @(Model.AC ? "Yes" : "No")
+        </p>
+
+        <p class="card-text">
+            <strong>Balcony:</strong> @(Model.Balcony ? "Yes" : "No")
+        </p>
+
+        <p class="card-text">
+            <strong>Garage:</strong> @(Model.Garage ? "Yes" : "No")
+        </p>
+
+        <p class="card-text">
+            <strong>TV:</strong> @(Model.Tv ? "Yes" : "No")
+        </p>
+
+        <p class="card-text">
+            <strong>Wifi:</strong> @(Model.Wifi ? "Yes" : "No")
+        </p>
 
         @* 6. RENT BUTTON *@
         <form asp-controller="Apartments"

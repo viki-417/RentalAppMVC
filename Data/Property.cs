@@ -14,6 +14,13 @@
         public bool IsAvailable { get; set; } = true;
 
         public bool Pets { get; set; } = true;
+        
+        public bool Furnitured { get; set; }
+        public bool AC { get; set; }
+        public bool Balcony { get; set; }
+        public bool Garage { get; set; }
+        public bool Tv { get; set; }
+        public bool Wifi { get; set; }
 
         public virtual string GetPropertyDetails()
         {

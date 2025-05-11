@@ -42,9 +42,59 @@ namespace RentalAppMVC.Data.Seeders
                         HasElevator = true,
                         Type = "Apartment",
                         UserId = user.Id,
-                        Pets = false
-                    }
-                );
+                        Pets = false,
+                        Furnitured = true,
+                        AC = false,
+                        Balcony = true,
+                        Garage = false,
+                        Tv = true,
+                        Wifi = true
+                    });
+                context.Studios.Add(
+                 new Studio()
+                 {
+                     Address = "456 Oak Avenue",
+                     Description = "Spacious apartment near the park.",
+                     Price = 2950,
+                     Title = "Parkside Apartment",
+                     FloorNumber = 2,
+                     ImageUrl = "/images/studiot1.jpg",
+                     IsAvailable = true,
+                     HasElevator = false,
+                     Type = "Studio",
+                     UserId = user.Id,
+                     Pets = true,
+                     Furnitured = false,
+                     AC = true,
+                     Balcony = true,
+                     Garage = false,
+                     Tv = true,
+                     Wifi = false
+                 });
+
+                context.Studios.Add(
+                 new Studio()
+                 {
+                     Address = "789 Elm Street",
+                     Description = "Modern apartment with all amenities.",
+                     Price = 1350,
+                     Title = "Modern Living",
+                     FloorNumber = 7,
+                     ImageUrl = "https://example.com/image3.jpg",
+                     IsAvailable = true,
+                     HasElevator = true,
+                     Type = "Studio",
+                     UserId = user.Id,
+                     Pets = false,
+                     Furnitured = true,
+                     AC = true,
+                     Balcony = true,
+                     Garage = true,
+                     Tv = true,
+                     Wifi = true
+                 });
+
+
 
                 await context.SaveChangesAsync(); // Use SaveChangesAsync for async operations
             }
