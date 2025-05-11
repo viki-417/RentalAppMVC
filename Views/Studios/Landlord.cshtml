@@ -1,4 +1,4 @@
-﻿@model RentalAppMVC.DTOs.UserDTO
+﻿@model RentalAppMVC.ViewModels.LandlordViewModel
 
 @{
     ViewData["Title"] = "Landlord Contact Information";
@@ -8,13 +8,13 @@
 
 <div class="card">
     <div class="card-body">
-        <p><strong>Name:</strong> @Model.Name</p>
-        <p><strong>Email:</strong> @Model.Email</p>
-        <p><strong>Phone:</strong> @Model.ContactInformation</p>
-     
+        <p><strong>Name:</strong> @Model.Landlord.Name</p>
+        <p><strong>Email:</strong> @Model.Landlord.Email</p>
+        <p><strong>Phone:</strong> @Model.Landlord.ContactInformation</p>
+
 
         <form asp-action="Rent"
-              asp-route-id="@Model.Id"
+              asp-route-id="@Model.Landlord.Id"
               method="post">
             <button type="submit" class="btn btn-success">Rent This Property</button>
         </form>
