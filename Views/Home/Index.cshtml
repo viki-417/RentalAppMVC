@@ -15,7 +15,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm">
 
-                        @* IMAGE *@
+ 
                         @if (!string.IsNullOrEmpty(item.ImageUrl))
                         {
                             <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title" />
@@ -28,13 +28,13 @@
                             <p class="card-text"><strong>Price:</strong> $@item.Price/month</p>
                             <p class="card-text"><strong>Description:</strong> @item.Description</p>
 
-                            @* HOUSE SPECIFIC FIELDS *@
+
                             @if (item.Type == "House")
                             {
 
                             }
 
-                            @* STUDIO SPECIFIC FIELDS *@
+
                             @if (item.Type == "Studio")
                             {
 
