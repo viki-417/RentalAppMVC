@@ -10,8 +10,8 @@
     <div class="card-body">
         <p><strong>Name:</strong> @Model.Landlord.Name</p>
         <p><strong>Email:</strong> @Model.Landlord.Email</p>
-        <p><strong>Phone:</strong> @Model.Landlord.ContactNumber</p>
-        <p><strong>Address:</strong> @Model.Landlord.Address</p>
+        <p><strong>Phone:</strong> @Model.Landlord.ContactInformation</p>
+  
 
         <form asp-action="Rent"
               asp-route-id="@Model.PropertyId"

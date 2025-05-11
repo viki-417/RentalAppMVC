@@ -60,12 +60,23 @@ namespace RentalAppMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.UserId = _userManager.GetUserId(User);
+                if (string.IsNullOrEmpty(model.UserId))
+                {
+                    ModelState.AddModelError("", "User ID is required. Please ensure you're logged in.");
+                    ViewData["UserId"] = new SelectList(
+                        _userManager.Users.Where(u => u.UserName != null), "Id", "UserName", model.UserId);
+                    return View(model);
+                }
+
                 await _studioService.AddAsync(model);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);
-            return View(model);
 
+            ViewData["UserId"] = new SelectList(
+                _userManager.Users.Where(u => u.UserName != null), "Id", "UserName", model.UserId);
+
+            return View(model);
         }
 
         public async Task<IActionResult> Landlord(string propertyId)
@@ -87,8 +98,8 @@ namespace RentalAppMVC.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                ContactNumber = user.ContactNumber,
-                Address = user.Address
+                ContactInformation = user.ContactInformation,
+               
             };
             var viewModel = new LandlordViewModel
             {

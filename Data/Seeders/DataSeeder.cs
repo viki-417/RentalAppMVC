@@ -20,7 +20,10 @@ namespace RentalAppMVC.Data.Seeders
                     user = new User
                     {
                         UserName = "user@example.com",
-                        Email = "user@example.com"
+                        Email = "user@example.com",
+                        ContactInformation = "0988764351",
+                        Name = "Emil Draganov"
+
                     };
                     await userManager.CreateAsync(user, "Password123!"); // Add password as needed
                 }
@@ -38,7 +41,8 @@ namespace RentalAppMVC.Data.Seeders
                         IsAvailable = true,
                         HasElevator = true,
                         Type = "Apartment",
-                        UserId = user.Id  // Assign UserId here
+                        UserId = user.Id,
+                        Pets = false
                     }
                 );
 

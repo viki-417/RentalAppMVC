@@ -8,7 +8,7 @@ namespace RentalAppMVC.Profiles
     {
         public UserProfile()
         {
-            CreateMap<UserDTO, User>()
+            CreateMap<User, UserDTO>()
                 .ReverseMap();
         }
     }

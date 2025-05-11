@@ -50,7 +50,8 @@ namespace RentalAppMVC.Controllers
 
         // GET: Apartments/Create
         public IActionResult Create()
-        {
+        
+       {
             ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName");
             return View();
         }
@@ -73,8 +74,8 @@ namespace RentalAppMVC.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                ContactNumber = user.ContactNumber,
-                Address = user.Address
+                ContactInformation = user.ContactInformation,
+              
             };
             var viewModel = new LandlordViewModel
             {
@@ -96,12 +97,18 @@ namespace RentalAppMVC.Controllers
             {
                 // ✅ Assign the currently logged-in user ID
                 model.UserId = _userManager.GetUserId(User);
-
+                if (string.IsNullOrEmpty(model.UserId))
+                {
+                    ModelState.AddModelError("", "User ID is required. Please ensure you're logged in.");
+                    ViewData["UserId"] = new SelectList(
+                    _userManager.Users.Where(u => u.UserName != null), "Id", "UserName", model.UserId);
+                    return View(model);
+                }
                 await _apartmentService.AddAsync(model);
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "UserName", model.UserId);
+            ViewData["UserId"] = new SelectList(_userManager.Users.Where(u => u.UserName != null), "Id", "UserName", model.UserId);
             return View(model);
         }
         // GET: Apartments/Edit/5
